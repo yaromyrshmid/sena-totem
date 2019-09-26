@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/sena-totem/static/css/main.0f6b764d.chunk.css",
+    "main.js": "/sena-totem/static/js/main.dbf0b31e.chunk.js",
+    "main.js.map": "/sena-totem/static/js/main.dbf0b31e.chunk.js.map",
+    "runtime-main.js": "/sena-totem/static/js/runtime-main.ff87ed9f.js",
+    "runtime-main.js.map": "/sena-totem/static/js/runtime-main.ff87ed9f.js.map",
+    "static/js/2.97dedd10.chunk.js": "/sena-totem/static/js/2.97dedd10.chunk.js",
+    "static/js/2.97dedd10.chunk.js.map": "/sena-totem/static/js/2.97dedd10.chunk.js.map",
+    "index.html": "/sena-totem/index.html",
+    "precache-manifest.cfe130b977126b754e036a69e528c7bc.js": "/sena-totem/precache-manifest.cfe130b977126b754e036a69e528c7bc.js",
+    "service-worker.js": "/sena-totem/service-worker.js",
+    "static/css/main.0f6b764d.chunk.css.map": "/sena-totem/static/css/main.0f6b764d.chunk.css.map"
+  }
+}
