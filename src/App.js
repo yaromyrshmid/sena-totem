@@ -1,25 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+
+import WorkArea from './containers/workArea/workArea';
+import Auth from './containers/auth/Auth';
+import Navigation from './containers/navigation/Navigation';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [authData, setAuthData] = useState({
+    idToken: localStorage.getItem('token'),
+    userId: localStorage.getItem('userId'),
+    signedIn: localStorage.getItem('signedIn'),
+  });
+
+  const loginHandler = (values)  => {
+    values.returnSecureToken = true;
+    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDFX9LAlOi-6ONPEXG3hw22qJT5aIo91Z4', values)
+    .then(response => {
+      console.log(response);
+      const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+      localStorage.setItem('token', response.data.idToken);
+      localStorage.setItem('expirationDate', expirationDate);
+      localStorage.setItem('userId', response.data.localId);
+      localStorage.setItem('signedIn', true)
+      const newAuthData = {
+        idToken: response.data.idToken,
+        userId: response.data.localId,
+        refreshToken: response.data.refreshToken,
+        signedIn: true
+      }
+      setAuthData(newAuthData);
+      setTimeout(() => {logoutHandler()}, response.data.expiresIn * 1000)
+    })
+    .catch(error => {
+      console.log(error);
+      
+    })
+  }
+
+  const logoutHandler = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('signedIn');
+    setAuthData({});
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Navigation authState={authData.signedIn} onLogout={logoutHandler}/>
+      <Switch>        
+        {authData.signedIn ? <Route path="/workarea" ><WorkArea authData={authData}/> </Route> : null}      
+        <Route path="/" ><Auth submitHandler={loginHandler} token={authData.idToken}/></Route>
+      </Switch>
+    </React.Fragment>
   );
 }
 
