@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import WorkArea from './containers/workArea/workArea';
@@ -31,7 +31,8 @@ const App = () => {
         signedIn: true
       }
       setAuthData(newAuthData);
-      setTimeout(() => {logoutHandler()}, response.data.expiresIn * 1000)
+      setTimeout(() => {logoutHandler()}, response.data.expiresIn * 1000);
+
     })
     .catch(error => {
       console.log(error);
@@ -44,16 +45,22 @@ const App = () => {
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
     localStorage.removeItem('signedIn');
-    setAuthData({});
+    setAuthData({
+      idToken: '',
+      userId: '',
+      signedIn: ''
+    });
+    console.log('logout', authData)
   }
 
   return (
     <React.Fragment>
       <Navigation authState={authData.signedIn} onLogout={logoutHandler}/>
       <Switch>        
-        {authData.signedIn ? <Route path="/workarea" ><WorkArea authData={authData}/> </Route> : null}      
+        <Route path="/workarea" ><WorkArea authData={authData}/></Route>      
         <Route path="/" ><Auth submitHandler={loginHandler} token={authData.idToken}/></Route>
       </Switch>
+      {authData.signedIn && <Redirect to="/workarea" />}
     </React.Fragment>
   );
 }

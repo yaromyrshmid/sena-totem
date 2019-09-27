@@ -1,46 +1,50 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 
+import './Auth.css'
+import { Container, Row, Col } from 'react-bootstrap';
+
 const Auth = (props) => {  
 
   return (
-    <React.Fragment>
-    <Formik
-    initialValues={{ 
-      email: '',
-      password: ''
-    }}
-    onSubmit={(values, { setSubmitting }) => {
+    <Container>
+      <Row>
+        <Col>
+          <div className="authForm">
+            <Formik      
+            initialValues={{ 
+              email: '',
+              password: ''
+            }}
+            onSubmit={(values, { setSubmitting }) => {
 
-      props.submitHandler(values);
-      setSubmitting(false);
-    }}
-  >
-    {({ isSubmitting, values, setFieldValue }) => (
-      <Form>
-        <div>
-          <label>
-            <Field
-              type="email"
-              name="email"
-              placeholder="Email"           
-            />Email
-          </label>
-          <label>
-            <Field
-              type="password"
-              name="password"
-              placeholder="Password"              
-            />Password
-          </label>
-        </div> 
-        <button type="submit" disabled={isSubmitting}>
-          Log In
-        </button>
-      </Form>
-    )}
-  </Formik>
-  </React.Fragment>
+              props.submitHandler(values);
+              setSubmitting(false);
+            }}
+          >
+            {({ isSubmitting, values, setFieldValue }) => (
+              <Form>
+                    <Field
+                      type="email"
+                      name="email"
+                      placeholder="Email"           
+                    />
+
+                    <Field
+                      type="password"
+                      name="password"
+                      placeholder="Password"              
+                    />
+                <button type="submit" disabled={isSubmitting}>
+                  Log In
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </Col>
+    </Row>
+  </Container>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const ExpForm = props => {
   const waresList = props.list.wares.map((item) => {
@@ -15,7 +16,7 @@ const ExpForm = props => {
   });
 
 
-  return (
+  return (    
     <Formik
       initialValues={{
         price: '',
@@ -53,83 +54,103 @@ const ExpForm = props => {
         setSubmitting(false);
       }}
       render={({ isSubmitting, values, setFieldValue, errors }) => (
-        <Form>
-          <label>
-            Ціна
-            <Field name="price" type="number"/>
-            <span className="errorMessage"><ErrorMessage name="price" /></span>
-            <span className="errorMessage"><ErrorMessage name="type"/></span>
-            <span className="errorMessage"><ErrorMessage name="name"/></span>
-            <span className="errorMessage"><ErrorMessage name="quantity"/></span>    
-          </label>
-          <FieldArray
-            name="income"
-            render={arrayHelpers => (
-              <div>
-                {values.income && values.income.length > 0 ? (
-                  values.income.map((line, index) => (
-                    <div key={index}>
+        <Container>
+          <Row>
+            <Col>
+              <Form>
+                <Row>
+                  <Col>
+                    <label>
+                      Ціна
+                      <Field className="input-number" name="price" type="number"/>
+                      <span className="errorMessage"><ErrorMessage name="price" /></span>
+                      <span className="errorMessage"><ErrorMessage name="type"/></span>
+                      <span className="errorMessage"><ErrorMessage name="name"/></span>
+                      <span className="errorMessage"><ErrorMessage name="quantity"/></span>    
+                    </label>
+                  </Col>
+                </Row>
+                <FieldArray
+                  name="income"
+                  render={arrayHelpers => (
+                    <React.Fragment>
+                      {values.income && values.income.length > 0 ? (
+                        values.income.map((line, index) => (
+                          <Row key={index}>
+                            <Col>
+                              <fieldset>
+                                <Field
+                                  className="radioInput"
+                                  type="radio"
+                                  name={`income.${index}.type`}
+                                  value="Товар"
+                                  checked={values.income[index].type === "Товар"}
+                                  onChange={() => setFieldValue(`income.${index}.type`, "Товар")}
+                                />
+                                <label>Товар</label>
 
-                      <label>
-                        <Field
-                          type="radio"
-                          name={`income.${index}.type`}
-                          value="Товар"
-                          checked={values.income[index].type === "Товар"}
-                          onChange={() => setFieldValue(`income.${index}.type`, "Товар")}
-                        />Товар
-                      </label>
-                      <label>
-                        <Field
-                          type="radio"
-                          name={`income.${index}.type`}
-                          value="Супутній товар"
-                          checked={values.income[index].type === "Супутній товар"}
-                          onChange={() => setFieldValue(`income.${index}.type`, "Супутній товар")}
-                        />Супутній товар
-                      </label>                 
-                      <label>
-                        Назва
-                        <Field component="select" name={`income.${index}.name`}>
-                          {values.income[index].type === 'Товар' && waresList}
-                          {values.income[index].type === 'Супутній товар' && subwaresList}
-                        </Field>    
-                      </label>
-                      <label>
-                        Колір
-                        <Field component="select" name={`income.${index}.color`}>
-                          {colorsList}
-                        </Field>
-                      </label>
-                      <label>
-                        Кількість
-                        <Field name={`income.${index}.quantity`} type="number"/>                          
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                      >
-                        X
-                      </button>
-                    </div>
-                  ))
-                ) : null 
-                }
-                <div>
-                  <button type="button" onClick={() => arrayHelpers.push({
-                    type: '',
-                    name: '',
-                    color: 'н/з',
-                    quantity: ''
-                  })}>                    
-                    Add new Line
-                  </button>
-                  <button type="submit" disabled={isSubmitting}>Submit</button>
-                </div>
-              </div>
-            )}
-          />
-        </Form>
+                              
+                                <Field
+                                  className="radioInput"
+                                  type="radio"
+                                  name={`income.${index}.type`}
+                                  value="Супутній товар"
+                                  checked={values.income[index].type === "Супутній товар"}
+                                  onChange={() => setFieldValue(`income.${index}.type`, "Супутній товар")}
+                                />
+                                <label>Супутній товар</label>
+                              </fieldset>
+                              <fieldset>
+                                <label>Назва</label>
+                                <Field component="select" name={`income.${index}.name`}>
+                                  {values.income[index].type === 'Товар' && waresList}
+                                  {values.income[index].type === 'Супутній товар' && subwaresList}
+                                </Field>    
+                              
+                                <label>Колір</label>
+                                <Field component="select" name={`income.${index}.color`}>
+                                  {colorsList}
+                                </Field>
+                                
+                                <label>Кількість</label>
+                                <Field className="input-number" name={`income.${index}.quantity`} type="number"/>                          
+                              </fieldset>
+                              <button
+                                className="button-x"
+                                type="button"
+                                onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                              >
+                                x
+                              </button>
+                            </Col>
+                          </Row>
+                        ))
+                      ) : null 
+                      }
+                      <Row>
+                        <Col>
+                          <button type="button" onClick={() => arrayHelpers.push({
+                            type: '',
+                            name: '',
+                            color: 'н/з',
+                            quantity: ''
+                          })}>                    
+                            Додати рядок
+                          </button>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={{ span: 3, offset: 9 }}>
+                          <button className="submitData" type="submit" disabled={isSubmitting}>Внести</button>
+                        </Col>
+                      </Row>
+                    </React.Fragment>
+                  )}
+                />
+              </Form>
+          </Col>
+        </Row>
+      </Container>
       )}
     />
 
