@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import axios from '../../axios';
 
 import Exp from '../exp/Exp';
 import Inc from '../inc/Inc';
 import Storage from '../storage/Storage';
+import './workArea.css';
+import './Forms.css'
 
 const WorkArea = props => {
   //Ставлю стейт нал
@@ -163,6 +166,7 @@ const WorkArea = props => {
           <Storage expData={expData} incData={incData}/>
         </Tab>
       </Tabs>
+      {!props.authData.signedIn && <Redirect to="/" />}
     </React.Fragment>
   )
 }

@@ -279,7 +279,7 @@ const StorageTable = props => {
   const lastRowTable = (
     <tr>
       <th></th>
-      <th></th>
+      <th>Всього</th>
       <th></th>
       <th>{lastRow.quantityE}</th>
       <th>{lastRow.totalPriceE}</th>
