@@ -9,12 +9,12 @@ const Navigation = props => {
 
   return (
     <Navbar bg="dark" variant="dark">
-      <NavLink to="/index" exact>
+      <NavLink to="/sena-totem" exact>
         <Navbar.Brand><Image src={Logo}/> </Navbar.Brand>
       </NavLink>
       <Nav className="mr-auto">
-        {!props.authState && <NavLink className="nav-link" to="/index" exact>Home</NavLink>}
-        {props.authState && <NavLink className="nav-link" to="/workarea" exact>Work Area</NavLink>}
+        <NavLink className="nav-link" to="/sena-totem" exact>Home</NavLink>
+        {props.authState && <NavLink className="nav-link" to="/sena-totem/workarea" exact>Work Area</NavLink>}
         {props.authState && <button className="logout" onClick={props.onLogout}>Log Out</button >}
       </Nav>
     </Navbar>

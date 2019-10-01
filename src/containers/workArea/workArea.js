@@ -73,6 +73,7 @@ const WorkArea = props => {
     }
   }, [expData])
 
+
   const onFormSubmitHandlerExp = (values)  => {
     axios.post('/exp.json?auth=' + props.authData.idToken, values)
     .then(response => {
@@ -89,20 +90,12 @@ const WorkArea = props => {
     })
   }
 
-  const onFormSubmitHandlerInc = (values)  => {
-    axios.post('/inc.json?auth=' + props.authData.idToken, values)
-    .then(response => {
-      console.log(response);
+  const onFormSubmitHandlerInc = (response, values)  => {
       const newIncData = {
         ...incData,
         [response.data.name]: values
       };
-      setIncData(newIncData);
-    })
-    .catch(error => {
-      console.log(error);
-      setShowError(true);
-    })
+      setIncData(newIncData);    
   }
 
   const onDeleteRowHandlerExp = (event) => {
@@ -156,6 +149,7 @@ const WorkArea = props => {
         </Tab>
         <Tab eventKey="inc" title="Доходи">
           <Inc
+            authData={props.authData}
             incData={incData}
             onFormSubmitHandler={onFormSubmitHandlerInc}
             onDeleteRowHandler={onDeleteRowHandlerInc}
@@ -166,7 +160,7 @@ const WorkArea = props => {
           <Storage expData={expData} incData={incData}/>
         </Tab>
       </Tabs>
-      {!props.authData.signedIn && <Redirect to="/" />}
+      {!props.authData.signedIn && <Redirect to="/sena-totem" />}
     </React.Fragment>
   )
 }

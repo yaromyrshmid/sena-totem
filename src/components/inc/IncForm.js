@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import { Container, Row, Col } from 'react-bootstrap';
+import axios from '../../axios';
 
 const ExpForm = props => {
   const waresList = props.list.wares.map((item) => {
@@ -47,13 +48,19 @@ const ExpForm = props => {
         })
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }, initialValues) => {
+
+      isSubmitting={false}
+
+      onSubmit={(values, { setSubmitting }) => {
         values.time = new Date().toISOString().split('T')[0];
-        props.formSubmitHandler(values);
-        console.log(values)
-        setSubmitting(false);
+        axios.post('/inc.json?auth=' + props.authData.idToken, values)
+        .then(response => {
+          console.log(response);
+          setSubmitting(false);
+          props.formSubmitHandler(response, values)
+        })
       }}
-      render={({ isSubmitting, values, setFieldValue, errors }) => (
+      render={({ isSubmitting, values, setFieldValue }) => (
         <Container>
           <Row>
             <Col>
@@ -102,7 +109,7 @@ const ExpForm = props => {
                               </fieldset>
                               <fieldset>
                                 <label>Назва</label>
-                                <Field component="select" name={`income.${index}.name`}>
+                                <Field component="select" name={`income.${index}.name`} placeholder='111'>
                                   {values.income[index].type === 'Товар' && waresList}
                                   {values.income[index].type === 'Супутній товар' && subwaresList}
                                 </Field>    
@@ -129,12 +136,14 @@ const ExpForm = props => {
                       }
                       <Row>
                         <Col>
-                          <button type="button" onClick={() => arrayHelpers.push({
+                          <button type="button" onClick={() => {
+                            arrayHelpers.push({
                             type: '',
                             name: '',
                             color: 'н/з',
-                            quantity: ''
-                          })}>                    
+                            quantity: ''                          
+                            })
+                          }}>                    
                             Додати рядок
                           </button>
                         </Col>

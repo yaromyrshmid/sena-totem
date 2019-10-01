@@ -49,17 +49,19 @@ const App = () => {
       userId: '',
       signedIn: ''
     });
-    console.log('logout', authData)
   }
 
   return (
     <React.Fragment>
       <Navigation authState={authData.signedIn} onLogout={logoutHandler}/>
       <Switch>        
-        <Route path="/workarea" ><WorkArea authData={authData}/></Route>      
-        <Route path="/" ><Auth submitHandler={loginHandler} token={authData.idToken}/></Route>
+        <Route path="/sena-totem/workarea" ><WorkArea authData={authData}/></Route>      
+        <Route path="/" >
+          {authData.signedIn ? <div></div> :
+          <Auth submitHandler={loginHandler} token={authData.idToken}/> }
+          </Route>
       </Switch>
-      {authData.signedIn && <Redirect to="/workarea" />}
+      {authData.signedIn && <Redirect to="/sena-totem/workarea" />}
     </React.Fragment>
   );
 }

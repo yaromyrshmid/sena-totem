@@ -9,7 +9,8 @@ const Inc = props => {
     <React.Fragment>
       <IncForm 
         formSubmitHandler={props.onFormSubmitHandler}
-        list={props.list} 
+        list={props.list}
+        authData={props.authData}
         />
       <IncTable incData={props.incData} deleteRowHandler={props.onDeleteRowHandler} />
     </React.Fragment>
