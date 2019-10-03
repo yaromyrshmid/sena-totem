@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/sena-totem/static/css/main.59c94bef.chunk.css",
-    "main.js": "/sena-totem/static/js/main.c926188e.chunk.js",
-    "main.js.map": "/sena-totem/static/js/main.c926188e.chunk.js.map",
+    "main.css": "/sena-totem/static/css/main.378b11bb.chunk.css",
+    "main.js": "/sena-totem/static/js/main.0c13d6a5.chunk.js",
+    "main.js.map": "/sena-totem/static/js/main.0c13d6a5.chunk.js.map",
     "runtime-main.js": "/sena-totem/static/js/runtime-main.ff87ed9f.js",
     "runtime-main.js.map": "/sena-totem/static/js/runtime-main.ff87ed9f.js.map",
     "static/js/2.556e3fdc.chunk.js": "/sena-totem/static/js/2.556e3fdc.chunk.js",
     "static/js/2.556e3fdc.chunk.js.map": "/sena-totem/static/js/2.556e3fdc.chunk.js.map",
     "index.html": "/sena-totem/index.html",
-    "precache-manifest.f4e59b2ca3142af13969c18421b513c4.js": "/sena-totem/precache-manifest.f4e59b2ca3142af13969c18421b513c4.js",
+    "precache-manifest.8d25a4ba04d99c96ce80f27da7269494.js": "/sena-totem/precache-manifest.8d25a4ba04d99c96ce80f27da7269494.js",
     "service-worker.js": "/sena-totem/service-worker.js",
-    "static/css/main.59c94bef.chunk.css.map": "/sena-totem/static/css/main.59c94bef.chunk.css.map",
+    "static/css/main.378b11bb.chunk.css.map": "/sena-totem/static/css/main.378b11bb.chunk.css.map",
     "static/media/logo.jpg": "/sena-totem/static/media/logo.edfb4b75.jpg"
   }
 }
