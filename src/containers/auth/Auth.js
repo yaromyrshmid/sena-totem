@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
+import { connect } from 'react-redux';
 
 import './Auth.css'
 import { Container, Row, Col } from 'react-bootstrap';
+import * as actions from '../../store/actions/index';
 
 const Auth = (props) => {  
 
@@ -17,8 +19,7 @@ const Auth = (props) => {
               password: ''
             }}
             onSubmit={(values, { setSubmitting }) => {
-
-              props.submitHandler(values);
+              props.logIn(values);
               setSubmitting(false);
             }}
           >
@@ -48,4 +49,16 @@ const Auth = (props) => {
   )
 }
 
-export default Auth;
+const mapStateToProps = state => {
+  return {
+    
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logIn: (values) => dispatch(actions.logIn(values)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

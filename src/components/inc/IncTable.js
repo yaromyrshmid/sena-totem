@@ -1,9 +1,32 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import axios from '../../axios';
+
+import * as actions from '../../store/actions/index';
 
 
 const IncTable = props => {
-  const table = (!props.incData) ? null : (
+  const deleteRowHandler = (event) => {
+    const id = event.target.id;
+    axios.delete('/inc/' + id + '.json?auth=' + props.idToken)
+    .then( res => {
+      console.log(res);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    const newIncData = {};
+    for (const key in props.incData) {
+      if (key !== id) {
+        newIncData[key] = props.incData[key]
+      }
+    }
+    props.setDataInc(newIncData);
+  }
+
+
+  const table = props.loaded ? (
     Object.keys(props.incData).reverse().map((incKey, index) => {
       const complect = props.incData[incKey].income.map((line, index) => {
         return (
@@ -29,13 +52,13 @@ const IncTable = props => {
             <td></td>
             <td></td>
             <td>{props.incData[incKey].price}</td>
-            <td><button id={incKey} onClick={props.deleteRowHandler}>x</button></td>
+            <td><button id={incKey} onClick={deleteRowHandler}>x</button></td>
           </tr>
           {complect}
         </tbody>
       )
     }) 
-  )  
+  ) : null;  
   
   return (
     <React.Fragment>
@@ -58,4 +81,18 @@ const IncTable = props => {
   )
 }
 
-export default IncTable;
+const mapStateToProps = state => {
+  return {
+    incData: state.data.incData,
+    loaded: state.data.loaded,
+    idToken: state.auth.idToken
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setDataInc: (incData) => dispatch(actions.setDataInc(incData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncTable);

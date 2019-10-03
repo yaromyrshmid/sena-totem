@@ -59,3 +59,8 @@ label input {
   margin-left: auto;
   width: 200px;
 }
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+}

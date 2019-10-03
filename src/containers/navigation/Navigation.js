@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, Image } from 'react-bootstrap';
 
 import Logo from '../../assets/images/logo.jpg';
-import './Navigation.css'
+import './Navigation.css';
+import * as actions from '../../store/actions/index';
 
 const Navigation = props => {
 
@@ -15,10 +17,22 @@ const Navigation = props => {
       <Nav className="mr-auto">
         <NavLink className="nav-link" to="/sena-totem" exact>Home</NavLink>
         {props.authState && <NavLink className="nav-link" to="/sena-totem/workarea" exact>Work Area</NavLink>}
-        {props.authState && <button className="logout" onClick={props.onLogout}>Log Out</button >}
+        {props.authState && <button className="logout" onClick={props.logOut}>Log Out</button >}
       </Nav>
     </Navbar>
   )
 }
 
-export default Navigation;
+const mapStateToProps = state => {
+  return {
+    authState: state.auth.signedIn
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logOut: () => dispatch(actions.logOut()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

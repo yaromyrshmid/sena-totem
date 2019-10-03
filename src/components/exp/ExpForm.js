@@ -1,22 +1,26 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+import axios from '../../axios';
+import * as actions from '../../store/actions/index';
 
 const ExpForm = props => {
   
-  const waresList = props.list.wares.map((item) => {
+  const waresList = props.lists.wares.map((item) => {
     return <option key={item} value={item} />
   });
 
-  const subwaresList = props.list.subwares.map((item) => {
+  const subwaresList = props.lists.subwares.map((item) => {
     return <option key={item} value={item} />
   });
 
-  const expsList = props.list.exps.map((item) => {
+  const expsList = props.lists.exps.map((item) => {
     return <option key={item} value={item} />
   });
 
-  const colorsList = props.list.colors.map((item) => {
+  const colorsList = props.lists.colors.map((item) => {
     return <option key={item} value={item} />
   });
 
@@ -46,15 +50,27 @@ const ExpForm = props => {
 
       return errors;
     }}
-    onSubmit={(values, { setSubmitting }, initialValues) => {
+    onSubmit={(values, { setSubmitting, resetForm }, initialValues) => {
       values.time = new Date().toISOString().split('T')[0];
       if(values.color.trim() === '') {
         values.color = 'н/з';
       }
       values.quantity = Number(values.quantity);
-      values.totalPrice = Number(values.totalPrice)
-      props.formSubmitHandler(values);
-      setSubmitting(false);
+      values.totalPrice = Number(values.totalPrice);
+      axios.post('/exp.json?auth=' + props.idToken, values)
+      .then(response => {
+        console.log(response);
+        setSubmitting(false);
+        const newExpData = {
+          ...props.expData,
+          [response.data.name]: values
+        };
+        props.setDataExp(newExpData);        
+        resetForm(initialValues);
+      })
+      .catch(error => {
+        console.log(error);
+      })
     }}
   >
     {({ isSubmitting, values, setFieldValue }) => (
@@ -133,7 +149,7 @@ const ExpForm = props => {
                   <Field 
                     className="input-number"
                     name="price" 
-                    value={(isNaN(values.totalPrice / values.quantity) || values.type === 'Витрата') ? 0 : values.totalPrice / values.quantity} 
+                    value={(isNaN(values.totalPrice / values.quantity) || values.type === 'Витрата') ? 0 : (values.totalPrice / values.quantity).toFixed(2)} 
                     onChange={() => setFieldValue("price", values.totalPrice / values.quantity)}
                     disabled/>
                 </Col>
@@ -155,4 +171,18 @@ const ExpForm = props => {
   )
 }
 
-export default ExpForm;
+const mapStateToProps = state => {
+  return {
+    expData: state.data.expData,
+    lists: state.data.lists,
+    idToken: state.auth.idToken
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setDataExp: (expData) => dispatch(actions.setDataExp(expData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpForm);

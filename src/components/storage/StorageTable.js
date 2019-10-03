@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 
 const StorageTable = props => {
 
@@ -15,7 +15,7 @@ const StorageTable = props => {
   };
 
   //Creating storage table
-  const table = (!props.expTable && !props.incTable) ? null : (
+  const table = (!props.loaded ) ? null : (
     //Iterating through wares in expTable
     Object.keys(props.expTable.ware).sort().map((wareName, wareIndex) => {
       //Creating new ware object
@@ -145,7 +145,7 @@ const StorageTable = props => {
   )
 
     //Creating storage subwarestable
-    const tableSubwares = (!props.expTable && !props.incTable) ? null : (
+    const tableSubwares = (!props.loaded) ? null : (
       //Iterating through wares in expTable
       Object.keys(props.expTable.subware).sort().map((wareName, wareIndex) => {
         //Creating new ware object
@@ -161,21 +161,21 @@ const StorageTable = props => {
           coloredWare.totalPriceE = props.expTable.subware[wareName][colorIndex].totalPrice;
           coloredWare.priceE = props.expTable.subware[wareName][colorIndex].price;
           //Checking if ware is in incTable
-          if (props.incTable.ware[wareName]) {
+          if (props.incTable.subware[wareName]) {
             
             //Checking if ware has same color in incTable
             let incomeColorIndex = false;
-            for (let i = 0; i < props.incTable.ware[wareName].length; i++) {
-              if (props.incTable.ware[wareName][i].color === coloredWare.color) {
+            for (let i = 0; i < props.incTable.subware[wareName].length; i++) {
+              if (props.incTable.subware[wareName][i].color === coloredWare.color) {
                 incomeColorIndex = i;
               } 
             }
             //Passing income info to the colored ware
             //If color exists in income
             if (typeof incomeColorIndex == 'number') {
-              coloredWare.quantityI = props.incTable.ware[wareName][incomeColorIndex].quantity;
-              coloredWare.totalPriceI =  props.incTable.ware[wareName][incomeColorIndex].totalPrice;
-              coloredWare.priceI = (props.incTable.ware[wareName][incomeColorIndex].price !== Infinity) ? props.incTable.ware[wareName][incomeColorIndex].price : 0;
+              coloredWare.quantityI = props.incTable.subware[wareName][incomeColorIndex].quantity;
+              coloredWare.totalPriceI =  props.incTable.subware[wareName][incomeColorIndex].totalPrice;
+              coloredWare.priceI = (props.incTable.subware[wareName][incomeColorIndex].price !== Infinity) ? props.incTable.subware[wareName][incomeColorIndex].price : 0;
               coloredWare.quantityS = coloredWare.quantityE - coloredWare.quantityI;
               coloredWare.priceS = coloredWare.priceI ? coloredWare.priceI : coloredWare.priceE;
               coloredWare.totalPriceS = coloredWare.priceS * coloredWare.quantityS;
@@ -323,4 +323,12 @@ const StorageTable = props => {
   )
 }
 
-export default StorageTable;
+const mapStateToProps = state => {
+  return {
+    expTable: state.tables.expTable,
+    incTable: state.tables.incTable,
+    loaded: state.tables.loaded
+  }
+}
+
+export default connect(mapStateToProps)(StorageTable);
