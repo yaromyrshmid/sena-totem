@@ -205,3 +205,78 @@ export const createIncTable = (incData) => {
   };
 } 
 
+export const countTotalStats = (expTable, incTable) => {
+  const totalStatsTable = {
+    exp: {
+      ware: 0,
+      subware: 0,
+      exp: 0
+    },
+    inc: {
+      ware: 0,
+      subware: 0
+    }
+  };
+  if (expTable && Object.keys(expTable).length > 0) {
+    if (Object.keys(expTable.ware).length > 0 && Object.keys(expTable.subware).length > 0 && Object.keys(expTable.exp).length > 0) {
+      Object.keys(expTable).map(type => {        
+        Object.keys(expTable[type]).map(item => {
+          expTable[type][item].map(coloredItem => {
+            totalStatsTable.exp[type] += coloredItem.totalPrice
+          })
+        })
+      })
+    }
+  }
+
+  if (incTable && Object.keys(incTable).length > 0) {
+    if (Object.keys(incTable.ware).length > 0 && Object.keys(incTable.subware).length > 0) {
+      Object.keys(incTable).map(type => {        
+        Object.keys(incTable[type]).map(item => {
+          incTable[type][item].map(coloredItem => {
+            totalStatsTable.inc[type] += coloredItem.totalPrice
+          })
+        })
+      })
+    }
+  }
+  console.log(totalStatsTable)
+  return {
+    type: actionTypes.COUNT_TOTAL_STATS,
+    totalStatsTable: totalStatsTable
+  }
+}
+
+export const checkForIncErrors = (expTable, incTable) => {
+  const totalIncTable = {
+    ...incTable.ware,
+    ...incTable.subware
+  }
+  const totalExpTable = {
+    ...expTable.ware,
+    ...expTable.subware
+  }
+  const incErrors = [];
+
+  Object.keys(totalIncTable).map(inc => {
+    totalIncTable[inc].map((coloredInc, index) => {
+      if (!totalExpTable[inc]) {
+        incErrors.push({[`${inc}`]: 0})
+      } else {
+        let expNotIncluded = true
+        totalExpTable[inc].map(coloredExp => {
+          if (coloredExp.color === coloredInc.color) {
+            expNotIncluded = false
+          }
+        })
+        if (expNotIncluded) {
+          incErrors.push({[`${inc}`]: coloredInc})
+        }
+      }  
+    })
+  })
+  return {
+    type: actionTypes.CHECK_FOR_INC_ERRORS,
+    incErrors: incErrors
+  }
+}

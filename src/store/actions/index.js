@@ -14,5 +14,7 @@ export {
 
 export {
   createExpTable,
-  createIncTable
+  createIncTable,
+  countTotalStats,
+  checkForIncErrors
 } from './tables';

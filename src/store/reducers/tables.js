@@ -3,6 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   expTable: {},
   incTable: {},
+  totalStatsTable: {},
+  incErrors: [],
   loaded: false
 };
 
@@ -19,6 +21,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         incTable: action.incTable,
         loaded: true
+      };
+    case actionTypes.COUNT_TOTAL_STATS:
+      return {
+        ...state,
+        totalStatsTable: action.totalStatsTable
+      };
+    case actionTypes.CHECK_FOR_INC_ERRORS:
+      return {
+        ...state,
+        incErrors: action.incErrors
       };
     default:
       return state;
