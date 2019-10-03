@@ -240,7 +240,6 @@ export const countTotalStats = (expTable, incTable) => {
       })
     }
   }
-  console.log(totalStatsTable)
   return {
     type: actionTypes.COUNT_TOTAL_STATS,
     totalStatsTable: totalStatsTable

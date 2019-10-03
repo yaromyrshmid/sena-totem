@@ -27,7 +27,6 @@ const Statistics = props => {
         inc: props.totalStatsTable.inc.ware + props.totalStatsTable.inc.subware,
         profit: props.totalStatsTable.inc.ware + props.totalStatsTable.inc.subware - (props.totalStatsTable.exp.ware + props.totalStatsTable.exp.subware + props.totalStatsTable.exp.exp)
       }
-      console.log(newChartData)
       setExpIncProfitChartData(newChartData)
     }
   }, [tablesLoaded])
@@ -45,7 +44,9 @@ const Statistics = props => {
     <Container>
       <Row>
         <Col>
-          <TotalExpInc chartData={expIncProfitChartData} />
+          <div className="chart">
+            <TotalExpInc chartData={expIncProfitChartData} />
+          </div>
         </Col>
       </Row>
       {props.incErrors.length > 0 &&
