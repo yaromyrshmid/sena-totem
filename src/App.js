@@ -20,14 +20,14 @@ const App = props => {
     <React.Fragment>
       <Navigation />
       <Switch>        
-        <Route path="/sena-totem/workarea" ><WorkArea /></Route>      
+        <Route path="/workarea" ><WorkArea /></Route>      
         <Route path="/" >
           {!props.authData.signedIn && !props.authData.loading && <Auth /> }
           {props.authData.loading && <Spinner />}
           {props.authData.signedIn && !props.authData.loading && <Statistics />}
         </Route>
       </Switch>
-      {props.authData.signedIn && <Redirect to="/sena-totem/workarea" />}
+      {props.authData.signedIn && <Redirect to="/workarea" />}
     </React.Fragment>
   );
 }
