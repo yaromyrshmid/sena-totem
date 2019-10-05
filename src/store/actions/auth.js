@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import * as actions from '../../store/actions/index';
 
 export const logInStart = () => {
   return {
@@ -32,6 +33,12 @@ export const checkLogoutTimeout = (expirationTime) => {
   };
 };
 
+export const logInLoadingOff = () => {
+  return {
+    type:actionTypes.LOG_IN_LOADING_OFF
+  }
+}
+
 export const logIn = (values) => {
   return dispatch => {
     dispatch(logInStart());
@@ -47,8 +54,9 @@ export const logIn = (values) => {
       dispatch(checkLogoutTimeout(response.data.expiresIn));
     })
     .catch(error => {
-      console.log(error);
-      
+      console.log(error.response);
+      dispatch(actions.showModal(error.response));
+      dispatch(logInLoadingOff());
     })
   };
 }

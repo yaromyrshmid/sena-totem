@@ -69,7 +69,7 @@ const ExpForm = props => {
         resetForm(initialValues);
       })
       .catch(error => {
-        console.log(error);
+        props.showModal(error.response);
       })
     }}
   >
@@ -181,7 +181,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDataExp: (expData) => dispatch(actions.setDataExp(expData))
+    setDataExp: (expData) => dispatch(actions.setDataExp(expData)),
+    showModal: (response) => dispatch(actions.showModal(response))
   }
 }
 

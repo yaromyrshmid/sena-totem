@@ -14,7 +14,7 @@ const IncTable = props => {
       console.log(res);
     })
     .catch(error => {
-      console.log(error);
+      props.showModal(error.response);
     })
     const newIncData = {};
     for (const key in props.incData) {
@@ -91,7 +91,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDataInc: (incData) => dispatch(actions.setDataInc(incData))
+    setDataInc: (incData) => dispatch(actions.setDataInc(incData)),
+    showModal: (response) => dispatch(actions.showModal(response))
   }
 }
 

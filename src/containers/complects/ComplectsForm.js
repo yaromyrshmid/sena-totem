@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
@@ -67,7 +67,7 @@ const ComplectsForm = props => {
           resetForm(initialValues);
         })
         .catch(error => {
-          console.log(error);
+          props.showModal(error.response);
         })
       }}
 
@@ -158,7 +158,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDataComplects: (complectsData) => dispatch(actions.setDataComplects(complectsData))
+    setDataComplects: (complectsData) => dispatch(actions.setDataComplects(complectsData)),
+    showModal: (response) => dispatch(actions.showModal(response))
   }
 }
 

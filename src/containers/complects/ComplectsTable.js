@@ -14,7 +14,7 @@ const ComplectsTable = props => {
       console.log(res);
     })
     .catch(error => {
-      console.log(error);
+      props.showModal(error.response);
     })
     const newComplectsData = {};
     for (const key in props.complectsData) {
@@ -78,7 +78,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDataComplects: (complectsData) => dispatch(actions.setDataComplects(complectsData))
+    setDataComplects: (complectsData) => dispatch(actions.setDataComplects(complectsData)),
+    showModal: (response) => dispatch(actions.showModal(response))
   }
 }
 

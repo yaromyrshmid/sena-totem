@@ -16,13 +16,10 @@ import './Forms.css';
 import * as actions from '../../store/actions/index';
 
 const WorkArea = props => {
-  //Ставлю стейт нал
-  const [showError, setShowError] = useState(false);
-
   //З серва тягну дані для наповнення 
   useEffect(() => {
     props.getDataEI(props.authData.idToken);
-  }, [showError] )
+  }, [props.gotError] )
 
   //На основі даних з серва хочу замутити новий стейт
   useEffect(() => {
@@ -59,7 +56,8 @@ const mapStateToProps = state => {
   return {
     authData: state.auth,
     expData: state.data.expData,
-    incData: state.data.incData
+    incData: state.data.incData,
+    gotError: state.ui.gotError
   }
 }
 

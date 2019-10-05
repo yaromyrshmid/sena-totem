@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
+import * as actions from '../../store/actions/index';
 
 export const setDataExp = (data) => {
   return {
@@ -32,7 +33,7 @@ export const getDataEI = (idToken) => {
       dispatch(setDataComplects(res.data.complects));
     })
     .catch(error => {
-      console.log(error);
+      dispatch(actions.showModal(error.response))
     })
   };
 };

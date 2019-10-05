@@ -18,3 +18,8 @@ export {
   countTotalStats,
   checkForIncErrors
 } from './tables';
+
+export {
+  showModal,
+  hideModal
+} from './ui';

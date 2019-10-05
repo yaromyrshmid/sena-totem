@@ -29,6 +29,11 @@ const reducer = (state = initialState, action) => {
         userId: null,
         signedIn: false
       };
+    case actionTypes.LOG_IN_LOADING_OFF:
+      return {
+        ...state,
+        loading: false
+      }
     default:
       return state;
   }
