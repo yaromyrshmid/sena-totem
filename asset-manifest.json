@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/sena-totem/static/css/main.378b11bb.chunk.css",
-    "main.js": "/sena-totem/static/js/main.e01225d5.chunk.js",
-    "main.js.map": "/sena-totem/static/js/main.e01225d5.chunk.js.map",
+    "main.css": "/sena-totem/static/css/main.90bfbf3f.chunk.css",
+    "main.js": "/sena-totem/static/js/main.6de10f6d.chunk.js",
+    "main.js.map": "/sena-totem/static/js/main.6de10f6d.chunk.js.map",
     "runtime-main.js": "/sena-totem/static/js/runtime-main.ff87ed9f.js",
     "runtime-main.js.map": "/sena-totem/static/js/runtime-main.ff87ed9f.js.map",
-    "static/js/2.556e3fdc.chunk.js": "/sena-totem/static/js/2.556e3fdc.chunk.js",
-    "static/js/2.556e3fdc.chunk.js.map": "/sena-totem/static/js/2.556e3fdc.chunk.js.map",
+    "static/js/2.477a1dae.chunk.js": "/sena-totem/static/js/2.477a1dae.chunk.js",
+    "static/js/2.477a1dae.chunk.js.map": "/sena-totem/static/js/2.477a1dae.chunk.js.map",
     "index.html": "/sena-totem/index.html",
-    "precache-manifest.1c310df73b69825a73f02d252cc6fdf1.js": "/sena-totem/precache-manifest.1c310df73b69825a73f02d252cc6fdf1.js",
+    "precache-manifest.23a7ef20e44cb2481ff28ae66d2e4174.js": "/sena-totem/precache-manifest.23a7ef20e44cb2481ff28ae66d2e4174.js",
     "service-worker.js": "/sena-totem/service-worker.js",
-    "static/css/main.378b11bb.chunk.css.map": "/sena-totem/static/css/main.378b11bb.chunk.css.map",
+    "static/css/main.90bfbf3f.chunk.css.map": "/sena-totem/static/css/main.90bfbf3f.chunk.css.map",
     "static/media/logo.jpg": "/sena-totem/static/media/logo.edfb4b75.jpg"
   }
 }
