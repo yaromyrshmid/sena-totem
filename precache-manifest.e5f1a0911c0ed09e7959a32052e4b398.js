@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f25def56445ebe8dc35a51d3a9b2f61c",
+    "revision": "a3118bb651095af23e08c3dd03200582",
     "url": "/sena-totem/index.html"
   },
   {
-    "revision": "a12a413a0aa736531c0b",
+    "revision": "3bef1b66af3cd9435356",
     "url": "/sena-totem/static/css/main.90bfbf3f.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sena-totem/static/js/2.477a1dae.chunk.js"
   },
   {
-    "revision": "a12a413a0aa736531c0b",
-    "url": "/sena-totem/static/js/main.6de10f6d.chunk.js"
+    "revision": "3bef1b66af3cd9435356",
+    "url": "/sena-totem/static/js/main.f21f0dfd.chunk.js"
   },
   {
     "revision": "87176d3b88565f5e63e9",
