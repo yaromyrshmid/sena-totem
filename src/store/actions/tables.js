@@ -152,6 +152,7 @@ export const createIncTable = (incData) => {
         if (item.type === "Товар") {
           //Checking if ware already exists
           if (tableIncWares[incData[incKey].income[incIndex].name]) {
+
             let isColor = false;
             //Iterating through color of each ware
             for (let i = 0; i < tableIncWares[incData[incKey].income[incIndex].name].length; i++ ) {

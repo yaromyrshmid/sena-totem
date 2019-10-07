@@ -47,7 +47,7 @@ const WorkArea = props => {
           <ComplectsTable />
         </Tab>
       </Tabs>
-      {!props.authData.signedIn && <Redirect to="/sena-totem" />}
+      {!props.authData.signedIn && <Redirect to="/" />}
     </React.Fragment>
   )
 }

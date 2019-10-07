@@ -17,7 +17,6 @@ export const TotalExpInc = props => {
               return [{
                 target: "labels",
                 mutation: (props) => {
-                  console.log(props)
                   return props.text === `${props.datum.labelNumber.toFixed(0)} грн.` ?
                     null : { text: `${props.datum.labelNumber.toFixed(0)} грн.` }
                 }

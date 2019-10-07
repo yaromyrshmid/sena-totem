@@ -49,6 +49,9 @@ const StorageTable = props => {
             coloredWare.quantityS = coloredWare.quantityE - coloredWare.quantityI;
             coloredWare.priceS = coloredWare.priceI ? coloredWare.priceI : coloredWare.priceE;
             coloredWare.totalPriceS = coloredWare.priceS * coloredWare.quantityS;
+            // if(wareName === 'Planner Notebook') {
+            //   console.log(props.incTable.ware[wareName], coloredWare.quantityI, coloredWare.totalPriceI, coloredWare.priceI)
+            // }
           } 
           //If color doesn't exist in income
           else {
@@ -282,10 +285,10 @@ const StorageTable = props => {
       <th>Всього</th>
       <th></th>
       <th>{lastRow.quantityE}</th>
-      <th>{lastRow.totalPriceE}</th>
+      <th>{(lastRow.totalPriceE).toFixed(2)}</th>
       <th></th>
       <th>{lastRow.quantityI}</th>
-      <th>{lastRow.totalPriceI}</th>
+      <th>{(lastRow.totalPriceI).toFixed(2)}</th>
       <th></th>
       <th>{lastRow.quantityS}</th>
       <th>{(lastRow.totalPriceS).toFixed(2)}</th>
