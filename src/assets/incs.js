@@ -2,7 +2,7 @@ const sendDataIncs = () => {
   let incToSend = {}
   incs.map(item => {
     if (item.price) {
-      axios.post('/inc.json?auth=' + props.token, incToSend)
+      axios.post('/balance/inc.json?auth=' + props.token, incToSend)
         .then(response => {
         console.log(response);   
       })

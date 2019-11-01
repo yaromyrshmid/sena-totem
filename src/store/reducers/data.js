@@ -1,10 +1,11 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   expData: {},
   incData: {},
   complectsData: {},
-  lists: {    
+  availableComplectsData: [],
+  lists: {
     wares: [],
     subwares: [],
     exps: [],
@@ -32,9 +33,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         complectsData: action.complects,
         loaded: true
-      }
+      };
+    case actionTypes.SET_DATA_AVAILABLE_COMPLECTS:
+      return {
+        ...state,
+        availableComplectsData: action.availableComplects,
+        loaded: true
+      };
     case actionTypes.CREATE_FORM_LISTS:
-      return {        
+      return {
         ...state,
         lists: action.lists
       };

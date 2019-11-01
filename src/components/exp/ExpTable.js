@@ -1,49 +1,59 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import React from "react";
+import { Table } from "react-bootstrap";
+import { connect } from "react-redux";
 
-import axios from '../../axios';
-import * as actions from '../../store/actions/index';
-
+import axios from "../../axios";
+import * as actions from "../../store/actions/index";
 
 const ExpTable = props => {
-  const deleteRowHandler = (event) => {
+  const deleteRowHandler = event => {
     const id = event.target.id;
-    axios.delete('/exp/' + id + '.json?auth=' + props.idToken)
-    .then( res => {
-      console.log(res);
-    })
-    .catch(error => {
-      props.showModal(error.response);
-    })
+    axios
+      .delete("/balance/exp/" + id + ".json?auth=" + props.idToken)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        props.showModal(error.response);
+      });
     const newExpData = {};
     for (const key in props.expData) {
       if (key !== id) {
-        newExpData[key] = props.expData[key]
+        newExpData[key] = props.expData[key];
       }
     }
     props.setDataExp(newExpData);
-  }
+  };
 
-  
-  const table = (!props.expData) ? null : (
-    Object.keys(props.expData).reverse().map((expKey, index) => {
-      return (
-        <tr key={expKey}>
-          <td>{index+1}</td>
-          <td>{props.expData[expKey].time}</td>
-          <td>{props.expData[expKey].type}</td>
-          <td>{props.expData[expKey].name}</td>
-          <td>{props.expData[expKey].color}</td>
-          <td>{props.expData[expKey].quantity}</td>
-          <td>{props.expData[expKey].totalPrice}</td>
-          <td>{(props.expData[expKey].totalPrice / props.expData[expKey].quantity).toFixed(2)}</td>
-          <td><button id={expKey} onClick={deleteRowHandler}>x</button></td>
-        </tr>
-      )
-    }) 
-  )  
-  
+  const table = !props.expData
+    ? null
+    : Object.keys(props.expData)
+        .reverse()
+        .map((expKey, index) => {
+          return (
+            <tr key={expKey}>
+              <td>{index + 1}</td>
+              <td>{props.expData[expKey].time}</td>
+              <td>{props.expData[expKey].type}</td>
+              <td>{props.expData[expKey].name}</td>
+              <td>{props.expData[expKey].color}</td>
+              <td>{props.expData[expKey].quantity}</td>
+              <td>{props.expData[expKey].totalPrice}</td>
+              <td>
+                {(
+                  props.expData[expKey].totalPrice /
+                  props.expData[expKey].quantity
+                ).toFixed(2)}
+              </td>
+              <td>
+                <button id={expKey} onClick={deleteRowHandler}>
+                  x
+                </button>
+              </td>
+            </tr>
+          );
+        });
+
   return (
     <React.Fragment>
       <Table striped bordered hover>
@@ -60,26 +70,27 @@ const ExpTable = props => {
             <th>Видалити</th>
           </tr>
         </thead>
-        <tbody>
-          {table}
-        </tbody>
+        <tbody>{table}</tbody>
       </Table>
     </React.Fragment>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => {
   return {
     expData: state.data.expData,
     idToken: state.auth.idToken
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDataExp: (expData) => dispatch(actions.setDataExp(expData)),
-    showModal: (response) => dispatch(actions.showModal(response))
-  }
-}
+    setDataExp: expData => dispatch(actions.setDataExp(expData)),
+    showModal: response => dispatch(actions.showModal(response))
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpTable);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExpTable);

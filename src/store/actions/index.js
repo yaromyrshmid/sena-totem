@@ -3,23 +3,17 @@ export {
   getDataEI,
   setDataExp,
   setDataInc,
-  setDataComplects
-} from './data';
+  setDataComplects,
+  setDataAvailableComplects
+} from "./data";
 
-export {
-  logIn,
-  logOut,
-  authCheckState
-} from './auth';
+export { logIn, logOut, authCheckState } from "./auth";
 
 export {
   createExpTable,
   createIncTable,
   countTotalStats,
   checkForIncErrors
-} from './tables';
+} from "./tables";
 
-export {
-  showModal,
-  hideModal
-} from './ui';
+export { showModal, hideModal } from "./ui";
