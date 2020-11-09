@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import axios from "../../axios";
+import { getDataEI } from "../../store/actions";
 
 const StorageTable = (props) => {
   //Creating form for last summing row
@@ -25,7 +26,7 @@ const StorageTable = (props) => {
       archived: true,
     });
 
-    window.location.reload();
+    props.getDataEI(props.idToken);
   };
 
   //Creating storage table
@@ -441,4 +442,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(StorageTable);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDataEI: (idToken) => dispatch(getDataEI(idToken)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StorageTable);
