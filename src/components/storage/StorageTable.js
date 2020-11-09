@@ -2,7 +2,9 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
-const StorageTable = props => {
+import axios from "../../axios";
+
+const StorageTable = (props) => {
   //Creating form for last summing row
   const lastRow = {
     quantityE: 0,
@@ -10,7 +12,20 @@ const StorageTable = props => {
     quantityI: 0,
     totalPriceI: 0,
     quantityS: 0,
-    totalPriceS: 0
+    totalPriceS: 0,
+  };
+
+  const handleArchive = async (name) => {
+    const wareKey = Object.keys(props.expData).find(
+      (key) => props.expData[key].name === name
+    );
+
+    await axios.put("/balance/exp/" + wareKey + ".json?auth=" + props.idToken, {
+      ...props.expData[wareKey],
+      archived: true,
+    });
+
+    window.location.reload();
   };
 
   //Creating storage table
@@ -20,6 +35,14 @@ const StorageTable = props => {
       Object.keys(props.expTable.ware)
         .sort()
         .map((wareName, wareIndex) => {
+          const wareKey = Object.keys(props.expData).find(
+            (key) => props.expData[key].name === wareName
+          );
+
+          if (props.expData[wareKey].archived) {
+            return null;
+          }
+
           //Creating new ware object
           const ware = {};
           ware.name = wareName;
@@ -102,7 +125,7 @@ const StorageTable = props => {
           ware.totalPriceI = 0;
           ware.totalPriceS = 0;
           //Summing up data from colors
-          ware.colors.map(colorWare => {
+          ware.colors.map((colorWare) => {
             ware.quantityE += colorWare.quantityE;
             ware.quantityI += colorWare.quantityI;
             ware.quantityS += colorWare.quantityS;
@@ -122,7 +145,11 @@ const StorageTable = props => {
             <tr>
               <th>{wareIndex + 1}</th>
               <th>{ware.name}</th>
-              <th></th>
+              <th>
+                <button type="button" onClick={() => handleArchive(wareName)}>
+                  Архівувати
+                </button>
+              </th>
               <th style={{ backgroundColor: "darkgray" }}></th>
               <th>{ware.quantityE}</th>
               <th>{ware.totalPriceE.toFixed(0)}</th>
@@ -182,6 +209,14 @@ const StorageTable = props => {
       Object.keys(props.expTable.subware)
         .sort()
         .map((wareName, wareIndex) => {
+          const wareKey = Object.keys(props.expData).find(
+            (key) => props.expData[key].name === wareName
+          );
+
+          if (props.expData[wareKey].archived) {
+            return null;
+          }
+
           //Creating new ware object
           const ware = {};
           ware.name = wareName;
@@ -267,7 +302,7 @@ const StorageTable = props => {
           ware.totalPriceI = 0;
           ware.totalPriceS = 0;
           //Summing up data from colors
-          ware.colors.map(colorWare => {
+          ware.colors.map((colorWare) => {
             ware.quantityE += colorWare.quantityE;
             ware.quantityI += colorWare.quantityI;
             ware.quantityS += colorWare.quantityS;
@@ -287,7 +322,11 @@ const StorageTable = props => {
             <tr>
               <th>{wareIndex + 1}</th>
               <th>{ware.name}</th>
-              <th></th>
+              <th>
+                <button type="button" onClick={() => handleArchive(wareName)}>
+                  Архівувати
+                </button>
+              </th>
               <th style={{ backgroundColor: "darkgray" }}></th>
               <th>{ware.quantityE}</th>
               <th>{ware.totalPriceE.toFixed(0)}</th>
@@ -392,11 +431,13 @@ const StorageTable = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     expTable: state.tables.expTable,
     incTable: state.tables.incTable,
-    loaded: state.tables.loaded
+    loaded: state.tables.loaded,
+    expData: state.data.expData,
+    idToken: state.auth.idToken,
   };
 };
 
